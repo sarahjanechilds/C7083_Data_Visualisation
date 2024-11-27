@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="S-J Childs">
+
+<title>C7083 Data Visualisation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="C7083_Data_Visualisation_files/libs/clipboard/clipboard.min.js"></script>
+<script src="C7083_Data_Visualisation_files/libs/quarto-html/quarto.js"></script>
+<script src="C7083_Data_Visualisation_files/libs/quarto-html/popper.min.js"></script>
+<script src="C7083_Data_Visualisation_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="C7083_Data_Visualisation_files/libs/quarto-html/anchor.min.js"></script>
+<link href="C7083_Data_Visualisation_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="C7083_Data_Visualisation_files/libs/quarto-html/quarto-syntax-highlighting-2486e1f0a3ee9ee1fc393803a1361cdb.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="C7083_Data_Visualisation_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="C7083_Data_Visualisation_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="C7083_Data_Visualisation_files/libs/bootstrap/bootstrap-5bdc1ec511977dd36301403cf8f4f68d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="C7083_Data_Visualisation_files/libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+
+<script src="C7083_Data_Visualisation_files/libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+
+<script src="C7083_Data_Visualisation_files/libs/plotly-binding-4.10.4/plotly.js"></script>
+
+<script src="C7083_Data_Visualisation_files/libs/typedarray-0.1/typedarray.min.js"></script>
+
+<script src="C7083_Data_Visualisation_files/libs/jquery-3.5.1/jquery.min.js"></script>
+
+<link href="C7083_Data_Visualisation_files/libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet">
+
+<script src="C7083_Data_Visualisation_files/libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+
+<link href="C7083_Data_Visualisation_files/libs/plotly-htmlwidgets-css-2.11.1/plotly-htmlwidgets.css" rel="stylesheet">
+
+<script src="C7083_Data_Visualisation_files/libs/plotly-main-2.11.1/plotly-latest.min.js"></script>
+
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">C7083 Data Visualisation</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>S-J Childs </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="from-milk-to-mozzarella-the-changing-face-of-american-dairy" class="level2">
+<h2 class="anchored" data-anchor-id="from-milk-to-mozzarella-the-changing-face-of-american-dairy">From Milk to Mozzarella: The Changing Face of American Dairy</h2>
+<p>Americans’ relationship with dairy has seen some significant shifts over the last four decades, but the detail in the data reveals some interesting surprises. The trends in the graph below show that milk production has continued to rise and rise - and yet, counterintuitively, the amount of milk each person drinks has nosedived<sup>1</sup>. So, what’s the story?</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C7083_Data_Visualisation_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="816"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="milk" class="level3">
+<h3 class="anchored" data-anchor-id="milk"><em>Milk</em></h3>
+<p>Let’s begin with production.</p>
+<p>Dairy production established itself in the east of the U.S. in the Great Lakes region, but soon spread westward following the population shifts. California is in fact the number one milk producing state, and together with Wisconsin, Idaho, Texas and New York state, produces more than half of all American milk<sup>2</sup>.</p>
+<p>But this doesn’t necessarily mean that the Golden State is overrun by the bovine hordes. Due to technological advancements, improvements in feed quality, and animal breeding programmes over the last forty years, the amount of milk produced per cow has skyrocketed - twice the amount today than in 1980<sup>1</sup>. Such efficiencies have led to a reduction in the total U.S. herd size by 30%<sup>2</sup>.</p>
+<p>More is made with less. But where is that ‘more’ going?</p>
+<p>From 234 lbs of milk a year in 1980 to 159lbs in 2014, is roughly a drop of about a third. Each successive generation is drinking less and, curiously, this trend has also been reported in other countries, including developing nations<sup>3</sup>.</p>
+<p>Milk isn’t just milk, however. There are a range of types namely, whole fat (4%), reduced fat (2%), low-fat (1%), skimmed and flavoured varieties. Not all of these have witnessed a decline - whole fat and flavoured whole fat have decreased, but, as we can see below, lower fat content milks have become more popular. This isn’t enough to halt the overall combined trend but could indicate an increasing awareness among the public of health-related issues to do with dietary fat intake<sup>4</sup>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C7083_Data_Visualisation_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Harwood and Drake’s study in 2018 of U.S. households, confirmed that reduced fat and low-fat milk were more frequently drunk, with preferences turning against whole <sup>5</sup>. Purchasing patterns in this study and additional studies <sup>6</sup> also shed light on milk type consumed by differing income groups, with those in higher income brackets (100,000 dollars and higher) more likely to go for skimmed and low-fat milk than lower income brackets (0-24,999 dollars).</p>
+<p>But a cautious approach is needed here, if we’re tempted to make generalisations about income and preference – the availability of all milk types is not equally distributed across the U.S.<sup>5</sup>. An insightful 2015 study by Rimkus et al at convenience and grocery stores in differing demographic areas nationwide, found that fewer than half stocked low-fat and skimmed milk. And in a low-income neighbourhood the likelihood of carrying reduced fat milks were significantly lower than compared to high-income communities<sup>7</sup>. Purchasing decisions are as much about availability as they are preferences and awareness of a healthy diet.</p>
+</section>
+<section id="yoghurt" class="level3">
+<h3 class="anchored" data-anchor-id="yoghurt"><em>Yoghurt</em></h3>
+<p>So, if milk isn’t being drunk, then where is it going to? The answer may be the other milk derived products out there, such as yoghurt. When examining the relationship between quantities of milk versus quantities of yoghurt consumed, intriguing speculations can be made.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C7083_Data_Visualisation_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The graph suggests a negative correlation between the two. Yoghurt has surged in popularity in America, as milk itself has decreased<sup>8</sup>, in part due to its cultural prominence as a food associated with good health. It’s higher nutritional value, (riboflavin, vitamins B-6 and B-12, calcium, potassium, zinc) than milk comes from the fermentation process by which it is made. It has been a component of global cuisines over millennia - the word ‘yoghurt’ coming from the Turkish word “yoğurmak” meaning to curdle or thicken - but not until recently is it now recognised as a marker of a healthy diet and lifestyle in various regions around the world <sup>9</sup>.</p>
+<p>Consequently, yoghurt-eaters are shown to have reduced incidences of obesity, hypertension and diabetes, plus greater nutrient intake from overall healthier dietary habits &lt;sup&lt;10. Even healthier non-nutritional behaviours are demonstrated, such as lower rates of smoking and higher participation in physical activity<sup>11</sup>. Americans make not eat as much yoghurt as the French (five servings a week!) for example <sup>10</sup>, but this increasing trend could be hugely beneficial. Except… well, there’s caveat: not all yoghurts are healthy. Mozaffarian et al (2019) noted the wide product range of yoghurts in U.S. stores and the quantity of artificially sweetened, flavoured and enhanced (with fruit compote or crunchy inclusions, for example), which were inversely associated with any health improvements<sup>8</sup>.</p>
+</section>
+<section id="ice-cream" class="level3">
+<h3 class="anchored" data-anchor-id="ice-cream"><em>Ice Cream</em></h3>
+<p>Another major dairy output is ice cream.</p>
+<p>Courtesy of Nancy Johnson’s 1843 patent for a hand-cranked ice cream freezer, commercial ice cream manufacturing grew in America from the late 19th century onwards<sup>12</sup>. The 1920s Prohibition Era helped establish it as a commonplace foodstuff, with beer makers, such as Anheuser-Busch, switching over their breweries to ice cream production to keep the business afloat<sup>12</sup>. Anheuser-Busch’s campaign encouraged people to “eat a plate of ice cream everyday”, no less!</p>
+<p>It became culturally embedded through the soda shops and drugstore counters of the 1930s and had moral boosting effects during WW2, with pop-up factories on the frontlines and $1 million spent on a floating ice cream barge that patrolled the pacific, making up to 500 gallons a day<sup>13</sup>. The 1950s and 60s saw widespread establishment of the frozen aisle, stocked with what was now considered a staple. In 1946, the average American ate 22.7 lbs of ice cream a year<sup>14</sup>. As we can see below, by 1975 this had already dropped to 18lbs and by 2017, 12.7lbs.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C7083_Data_Visualisation_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="768"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Low fat options and sherbet (like sorbet, but made with dairy) have stayed relatively stable at about 6lbs and 1lbs respectively, suggesting the observed decline of regular ice cream may not be due to dietary trends away from fat and sugar. Studies reveal that, with freezers becoming a common household appliance, customers are now offered a much broader variety to choose from and eat at home<sup>13</sup>. Ice cream is no longer the major dessert option. How about a cheesecake, profiteroles, gateaux or apple pie?</p>
+<p>There could also be changes in taste preferences over the generations, with survey results indicating you’re far more likely to purchase higher amounts of ice cream if you’re over 55 years old<sup>14</sup>. The younger masses do still eat ice cream, but it is often smaller sized, premium or artisan varieties – with some interesting new flavours available, such as goat’s cheese, sweet potato pie, or even carrot and habanero pepper (<em>really tho?!</em>)<sup>13</sup>.</p>
+<p>As an aside, yes, the spike in the ‘Other’ frozen dairy category is curious. Although not stated in the data, it does suspiciously mirror the rise of the uber-fad that was frozen yoghurt, which swept across the U.S. in the late 1980s to mid-1990s<sup>12</sup>. Everybody was eating frozen yoghurt. And then got a little bit bored of it.</p>
+<p>Looking at the trends of the major non-milk dairy products from 1975 to 2017, the winners and losers start to show. Butter has remained steadfastly stable with limited variation over time, hovering at around 5lbs per person. Ice cream is on a slower slide down and yoghurt rises in popularity noticeably from the turn of the millennium onward.</p>
+<p>There’s one phenomenon occurring here that stands out from the rest, however…</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="plotly html-widget html-fill-item" id="htmlwidget-6d6980b46f0eff79a4c3" style="width:100%;height:400px;"></div>
+<script type="application/json" data-for="htmlwidget-6d6980b46f0eff79a4c3">{"x":{"data":[{"x":[1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017],"y":[1.9678385724141443,2.1326851193615703,2.3383687721066657,2.4485028191477411,2.4438470596076516,2.5030080008431184,2.4351425862953655,2.5841128740503385,3.1582496468308672,3.5540812699917068,3.9418617329095134,4.1553951573024834,4.4233208678604967,4.6934752531415675,3.6710303951613552,3.8939439975692838,4.1026773914861554,4.4064867221499915,4.8721446273846807,5.2156880608572864,6.1375240567683456,5.8664946026024687,5.7454628065559836,5.9250674537783166,6.129741419436149,6.4982205145457446,7.0204585204112027,8.024852050467711,8.6307790346782429,9.2277332845004043,10.344843326537518,11.067044163576531,11.552830289946206,11.722527056227294,12.457739395970599,13.439522282091962,13.641549680043651,14.026667019586814,14.93039221160987,14.848826991854075,14.383315774707421,13.733274879198559,13.717086293145046],"text":["year: 1975<br />fluid_yogurt:  1.967839<br />colour: Fluid Yogurt","year: 1976<br />fluid_yogurt:  2.132685<br />colour: Fluid Yogurt","year: 1977<br />fluid_yogurt:  2.338369<br />colour: Fluid Yogurt","year: 1978<br />fluid_yogurt:  2.448503<br />colour: Fluid Yogurt","year: 1979<br />fluid_yogurt:  2.443847<br />colour: Fluid Yogurt","year: 1980<br />fluid_yogurt:  2.503008<br />colour: Fluid Yogurt","year: 1981<br />fluid_yogurt:  2.435143<br />colour: Fluid Yogurt","year: 1982<br />fluid_yogurt:  2.584113<br />colour: Fluid Yogurt","year: 1983<br />fluid_yogurt:  3.158250<br />colour: Fluid Yogurt","year: 1984<br />fluid_yogurt:  3.554081<br />colour: Fluid Yogurt","year: 1985<br />fluid_yogurt:  3.941862<br />colour: Fluid Yogurt","year: 1986<br />fluid_yogurt:  4.155395<br />colour: Fluid Yogurt","year: 1987<br />fluid_yogurt:  4.423321<br />colour: Fluid Yogurt","year: 1988<br />fluid_yogurt:  4.693475<br />colour: Fluid Yogurt","year: 1989<br />fluid_yogurt:  3.671030<br />colour: Fluid Yogurt","year: 1990<br />fluid_yogurt:  3.893944<br />colour: Fluid Yogurt","year: 1991<br />fluid_yogurt:  4.102677<br />colour: Fluid Yogurt","year: 1992<br />fluid_yogurt:  4.406487<br />colour: Fluid Yogurt","year: 1993<br />fluid_yogurt:  4.872145<br />colour: Fluid Yogurt","year: 1994<br />fluid_yogurt:  5.215688<br />colour: Fluid Yogurt","year: 1995<br />fluid_yogurt:  6.137524<br />colour: Fluid Yogurt","year: 1996<br />fluid_yogurt:  5.866495<br />colour: Fluid Yogurt","year: 1997<br />fluid_yogurt:  5.745463<br />colour: Fluid Yogurt","year: 1998<br />fluid_yogurt:  5.925067<br />colour: Fluid Yogurt","year: 1999<br />fluid_yogurt:  6.129741<br />colour: Fluid Yogurt","year: 2000<br />fluid_yogurt:  6.498221<br />colour: Fluid Yogurt","year: 2001<br />fluid_yogurt:  7.020459<br />colour: Fluid Yogurt","year: 2002<br />fluid_yogurt:  8.024852<br />colour: Fluid Yogurt","year: 2003<br />fluid_yogurt:  8.630779<br />colour: Fluid Yogurt","year: 2004<br />fluid_yogurt:  9.227733<br />colour: Fluid Yogurt","year: 2005<br />fluid_yogurt: 10.344843<br />colour: Fluid Yogurt","year: 2006<br />fluid_yogurt: 11.067044<br />colour: Fluid Yogurt","year: 2007<br />fluid_yogurt: 11.552830<br />colour: Fluid Yogurt","year: 2008<br />fluid_yogurt: 11.722527<br />colour: Fluid Yogurt","year: 2009<br />fluid_yogurt: 12.457739<br />colour: Fluid Yogurt","year: 2010<br />fluid_yogurt: 13.439522<br />colour: Fluid Yogurt","year: 2011<br />fluid_yogurt: 13.641550<br />colour: Fluid Yogurt","year: 2012<br />fluid_yogurt: 14.026667<br />colour: Fluid Yogurt","year: 2013<br />fluid_yogurt: 14.930392<br />colour: Fluid Yogurt","year: 2014<br />fluid_yogurt: 14.848827<br />colour: Fluid Yogurt","year: 2015<br />fluid_yogurt: 14.383316<br />colour: Fluid Yogurt","year: 2016<br />fluid_yogurt: 13.733275<br />colour: Fluid Yogurt","year: 2017<br />fluid_yogurt: 13.717086<br />colour: Fluid Yogurt"],"type":"scatter","mode":"lines","line":{"width":4.1574803149606305,"color":"rgba(255,165,0,1)","dash":"solid"},"hoveron":"points","name":"Fluid Yogurt","legendgroup":"Fluid Yogurt","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017],"y":[27.872928560514509,26.850276331781593,26.847197816917074,26.582204551070379,25.756815000777589,25.708966038133546,25.819468964977432,25.790738539459404,26.506250346767278,26.724152520859075,27.569968045759143,27.650830455722186,27.777960824368627,27.282559454087611,28.286744669324253,28.170326067836186,29.122303179969467,28.502417339447398,28.960442642792646,29.420428491170533,28.866996552332147,27.591066018459799,27.798073364576727,28.471470220741356,28.176401927717741,27.533686279370361,26.515812680286984,26.267853733881743,26.650539007280365,25.164996420249444,25.193272329729215,25.621093538680679,25.258281666591763,24.555298488560748,23.78810216670793,23.945464478251431,23.30311234984201,23.747347690566066,22.955083125006027,22.451659787193961,23.23427342373472,22.920022695133007,23.092331416776492],"text":["year: 1975<br />frozen_combined: 27.87293<br />colour: Ice Cream","year: 1976<br />frozen_combined: 26.85028<br />colour: Ice Cream","year: 1977<br />frozen_combined: 26.84720<br />colour: Ice Cream","year: 1978<br />frozen_combined: 26.58220<br />colour: Ice Cream","year: 1979<br />frozen_combined: 25.75682<br />colour: Ice Cream","year: 1980<br />frozen_combined: 25.70897<br />colour: Ice Cream","year: 1981<br />frozen_combined: 25.81947<br />colour: Ice Cream","year: 1982<br />frozen_combined: 25.79074<br />colour: Ice Cream","year: 1983<br />frozen_combined: 26.50625<br />colour: Ice Cream","year: 1984<br />frozen_combined: 26.72415<br />colour: Ice Cream","year: 1985<br />frozen_combined: 27.56997<br />colour: Ice Cream","year: 1986<br />frozen_combined: 27.65083<br />colour: Ice Cream","year: 1987<br />frozen_combined: 27.77796<br />colour: Ice Cream","year: 1988<br />frozen_combined: 27.28256<br />colour: Ice Cream","year: 1989<br />frozen_combined: 28.28674<br />colour: Ice Cream","year: 1990<br />frozen_combined: 28.17033<br />colour: Ice Cream","year: 1991<br />frozen_combined: 29.12230<br />colour: Ice Cream","year: 1992<br />frozen_combined: 28.50242<br />colour: Ice Cream","year: 1993<br />frozen_combined: 28.96044<br />colour: Ice Cream","year: 1994<br />frozen_combined: 29.42043<br />colour: Ice Cream","year: 1995<br />frozen_combined: 28.86700<br />colour: Ice Cream","year: 1996<br />frozen_combined: 27.59107<br />colour: Ice Cream","year: 1997<br />frozen_combined: 27.79807<br />colour: Ice Cream","year: 1998<br />frozen_combined: 28.47147<br />colour: Ice Cream","year: 1999<br />frozen_combined: 28.17640<br />colour: Ice Cream","year: 2000<br />frozen_combined: 27.53369<br />colour: Ice Cream","year: 2001<br />frozen_combined: 26.51581<br />colour: Ice Cream","year: 2002<br />frozen_combined: 26.26785<br />colour: Ice Cream","year: 2003<br />frozen_combined: 26.65054<br />colour: Ice Cream","year: 2004<br />frozen_combined: 25.16500<br />colour: Ice Cream","year: 2005<br />frozen_combined: 25.19327<br />colour: Ice Cream","year: 2006<br />frozen_combined: 25.62109<br />colour: Ice Cream","year: 2007<br />frozen_combined: 25.25828<br />colour: Ice Cream","year: 2008<br />frozen_combined: 24.55530<br />colour: Ice Cream","year: 2009<br />frozen_combined: 23.78810<br />colour: Ice Cream","year: 2010<br />frozen_combined: 23.94546<br />colour: Ice Cream","year: 2011<br />frozen_combined: 23.30311<br />colour: Ice Cream","year: 2012<br />frozen_combined: 23.74735<br />colour: Ice Cream","year: 2013<br />frozen_combined: 22.95508<br />colour: Ice Cream","year: 2014<br />frozen_combined: 22.45166<br />colour: Ice Cream","year: 2015<br />frozen_combined: 23.23427<br />colour: Ice Cream","year: 2016<br />frozen_combined: 22.92002<br />colour: Ice Cream","year: 2017<br />frozen_combined: 23.09233<br />colour: Ice Cream"],"type":"scatter","mode":"lines","line":{"width":4.1574803149606305,"color":"rgba(32,178,170,1)","dash":"solid"},"hoveron":"points","name":"Ice Cream","legendgroup":"Ice Cream","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017],"y":[18.862167956179704,20.143261402985758,20.612561807854192,21.435451625221827,21.59933349625647,21.932660302293105,22.452027691049981,24.064615742415629,24.652997989816782,25.55755919237734,26.570722870346295,27.14887534230067,27.988093276881759,27.540443472192184,27.321789263448988,27.933611053363826,28.166091371359368,28.910500050604529,28.902518683598778,29.327385019511389,29.338535456200834,29.627530060331377,29.877888213401913,30.242384607011559,31.458853741109785,32.146502857311788,32.390054877259949,32.829593597917999,32.892213520535925,33.620961499692584,33.975569377387544,34.765379065875564,35.235659234168665,34.492464068644061,34.634675089338437,35.043061022729667,35.261821090081753,35.535507541698323,35.566760819891051,36.237267024184142,37.191769084743498,38.541014778768016,39.001061715811161],"text":["year: 1975<br />cheese_combined: 18.86217<br />colour: Cheese","year: 1976<br />cheese_combined: 20.14326<br />colour: Cheese","year: 1977<br />cheese_combined: 20.61256<br />colour: Cheese","year: 1978<br />cheese_combined: 21.43545<br />colour: Cheese","year: 1979<br />cheese_combined: 21.59933<br />colour: Cheese","year: 1980<br />cheese_combined: 21.93266<br />colour: Cheese","year: 1981<br />cheese_combined: 22.45203<br />colour: Cheese","year: 1982<br />cheese_combined: 24.06462<br />colour: Cheese","year: 1983<br />cheese_combined: 24.65300<br />colour: Cheese","year: 1984<br />cheese_combined: 25.55756<br />colour: Cheese","year: 1985<br />cheese_combined: 26.57072<br />colour: Cheese","year: 1986<br />cheese_combined: 27.14888<br />colour: Cheese","year: 1987<br />cheese_combined: 27.98809<br />colour: Cheese","year: 1988<br />cheese_combined: 27.54044<br />colour: Cheese","year: 1989<br />cheese_combined: 27.32179<br />colour: Cheese","year: 1990<br />cheese_combined: 27.93361<br />colour: Cheese","year: 1991<br />cheese_combined: 28.16609<br />colour: Cheese","year: 1992<br />cheese_combined: 28.91050<br />colour: Cheese","year: 1993<br />cheese_combined: 28.90252<br />colour: Cheese","year: 1994<br />cheese_combined: 29.32739<br />colour: Cheese","year: 1995<br />cheese_combined: 29.33854<br />colour: Cheese","year: 1996<br />cheese_combined: 29.62753<br />colour: Cheese","year: 1997<br />cheese_combined: 29.87789<br />colour: Cheese","year: 1998<br />cheese_combined: 30.24238<br />colour: Cheese","year: 1999<br />cheese_combined: 31.45885<br />colour: Cheese","year: 2000<br />cheese_combined: 32.14650<br />colour: Cheese","year: 2001<br />cheese_combined: 32.39005<br />colour: Cheese","year: 2002<br />cheese_combined: 32.82959<br />colour: Cheese","year: 2003<br />cheese_combined: 32.89221<br />colour: Cheese","year: 2004<br />cheese_combined: 33.62096<br />colour: Cheese","year: 2005<br />cheese_combined: 33.97557<br />colour: Cheese","year: 2006<br />cheese_combined: 34.76538<br />colour: Cheese","year: 2007<br />cheese_combined: 35.23566<br />colour: Cheese","year: 2008<br />cheese_combined: 34.49246<br />colour: Cheese","year: 2009<br />cheese_combined: 34.63468<br />colour: Cheese","year: 2010<br />cheese_combined: 35.04306<br />colour: Cheese","year: 2011<br />cheese_combined: 35.26182<br />colour: Cheese","year: 2012<br />cheese_combined: 35.53551<br />colour: Cheese","year: 2013<br />cheese_combined: 35.56676<br />colour: Cheese","year: 2014<br />cheese_combined: 36.23727<br />colour: Cheese","year: 2015<br />cheese_combined: 37.19177<br />colour: Cheese","year: 2016<br />cheese_combined: 38.54101<br />colour: Cheese","year: 2017<br />cheese_combined: 39.00106<br />colour: Cheese"],"type":"scatter","mode":"lines","line":{"width":4.1574803149606305,"color":"rgba(238,121,66,1)","dash":"solid"},"hoveron":"points","name":"Cheese","legendgroup":"Cheese","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017],"y":[4.728192875961347,4.3132020088517899,4.2941804130966812,4.3545926275355473,4.4912310324142988,4.4675091996522136,4.2382439143177688,4.3513273726463044,4.9067974921790638,4.9762976627684603,4.8720907802370146,4.832487710418822,4.4352069982372608,4.4855951122556847,4.4306062051734036,4.3070938544448527,4.3765942254815711,4.3241570453183025,4.6541123129238642,4.7303709439863955,4.6103068587428977,4.2934740994452056,4.1871532170923516,4.3377695094862396,4.6149903135013632,4.4750570689858504,4.3602432797477579,4.4082443636230328,4.4465584170234278,4.5182332554074538,4.5434888977726926,4.6801714859910364,4.6837043290688314,4.9787298946396694,4.9589383823597899,4.9118437571616429,5.3715427210058637,5.5031461903007903,5.4710010905079809,5.4962652686105589,5.6035208353046846,5.6948308708133668,5.6841233938045086],"text":["year: 1975<br />butter: 4.728193<br />colour: Butter","year: 1976<br />butter: 4.313202<br />colour: Butter","year: 1977<br />butter: 4.294180<br />colour: Butter","year: 1978<br />butter: 4.354593<br />colour: Butter","year: 1979<br />butter: 4.491231<br />colour: Butter","year: 1980<br />butter: 4.467509<br />colour: Butter","year: 1981<br />butter: 4.238244<br />colour: Butter","year: 1982<br />butter: 4.351327<br />colour: Butter","year: 1983<br />butter: 4.906797<br />colour: Butter","year: 1984<br />butter: 4.976298<br />colour: Butter","year: 1985<br />butter: 4.872091<br />colour: Butter","year: 1986<br />butter: 4.832488<br />colour: Butter","year: 1987<br />butter: 4.435207<br />colour: Butter","year: 1988<br />butter: 4.485595<br />colour: Butter","year: 1989<br />butter: 4.430606<br />colour: Butter","year: 1990<br />butter: 4.307094<br />colour: Butter","year: 1991<br />butter: 4.376594<br />colour: Butter","year: 1992<br />butter: 4.324157<br />colour: Butter","year: 1993<br />butter: 4.654112<br />colour: Butter","year: 1994<br />butter: 4.730371<br />colour: Butter","year: 1995<br />butter: 4.610307<br />colour: Butter","year: 1996<br />butter: 4.293474<br />colour: Butter","year: 1997<br />butter: 4.187153<br />colour: Butter","year: 1998<br />butter: 4.337770<br />colour: Butter","year: 1999<br />butter: 4.614990<br />colour: Butter","year: 2000<br />butter: 4.475057<br />colour: Butter","year: 2001<br />butter: 4.360243<br />colour: Butter","year: 2002<br />butter: 4.408244<br />colour: Butter","year: 2003<br />butter: 4.446558<br />colour: Butter","year: 2004<br />butter: 4.518233<br />colour: Butter","year: 2005<br />butter: 4.543489<br />colour: Butter","year: 2006<br />butter: 4.680171<br />colour: Butter","year: 2007<br />butter: 4.683704<br />colour: Butter","year: 2008<br />butter: 4.978730<br />colour: Butter","year: 2009<br />butter: 4.958938<br />colour: Butter","year: 2010<br />butter: 4.911844<br />colour: Butter","year: 2011<br />butter: 5.371543<br />colour: Butter","year: 2012<br />butter: 5.503146<br />colour: Butter","year: 2013<br />butter: 5.471001<br />colour: Butter","year: 2014<br />butter: 5.496265<br />colour: Butter","year: 2015<br />butter: 5.603521<br />colour: Butter","year: 2016<br />butter: 5.694831<br />colour: Butter","year: 2017<br />butter: 5.684123<br />colour: Butter"],"type":"scatter","mode":"lines","line":{"width":4.1574803149606305,"color":"rgba(79,148,205,1)","dash":"solid"},"hoveron":"points","name":"Butter","legendgroup":"Butter","showlegend":true,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null},{"x":[1972.9000000000001,2019.0999999999999],"y":[0,0],"text":"","type":"scatter","mode":"lines","line":{"width":2.6456692913385824,"color":"rgba(51,51,51,1)","dash":"solid"},"hoveron":"points","showlegend":false,"xaxis":"x","yaxis":"y","hoverinfo":"text","frame":null}],"layout":{"margin":{"t":44.825238688252384,"r":7.3059360730593621,"b":45.761726857617269,"l":42.839352428393525},"paper_bgcolor":"rgba(255,255,255,1)","font":{"color":"rgba(0,0,0,1)","family":"","size":14.611872146118724},"title":{"text":"Changes to Consumed Dairy Products Over Time","font":{"color":"rgba(34,34,34,1)","family":"Helvetica","size":14,"face":"bold"},"x":0,"xref":"paper"},"xaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[1972.9000000000001,2019.0999999999999],"tickmode":"linear","ticktext":["1975","1980","1985","1990","1995","2000","2005","2010","2015"],"tickvals":[1975,1980,1985,1990,1995,2000,2005,2010,2015],"categoryorder":"array","categoryarray":["1975","1980","1985","1990","1995","2000","2005","2010","2015"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(34,34,34,1)","family":"Helvetica","size":15.940224159402243},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":false,"gridcolor":null,"gridwidth":0,"zeroline":false,"anchor":"y","title":"Year","hoverformat":".2f","tick0":1975,"dtick":5},"yaxis":{"domain":[0,1],"automargin":true,"type":"linear","autorange":false,"range":[0,40],"tickmode":"linear","ticktext":["0","5","10","15","20","25","30","35","40"],"tickvals":[0,5,10,15,20,25,30,35,40],"categoryorder":"array","categoryarray":["0","5","10","15","20","25","30","35","40"],"nticks":null,"ticks":"","tickcolor":null,"ticklen":3.6529680365296811,"tickwidth":0,"showticklabels":true,"tickfont":{"color":"rgba(34,34,34,1)","family":"Helvetica","size":15.940224159402243},"tickangle":-0,"showline":false,"linecolor":null,"linewidth":0,"showgrid":true,"gridcolor":"rgba(203,203,203,1)","gridwidth":0.66417600664176002,"zeroline":false,"anchor":"x","title":"Lbs per person","hoverformat":".2f","tick0":0,"dtick":5},"shapes":[{"type":"rect","fillcolor":null,"line":{"color":null,"width":0,"linetype":[]},"yref":"paper","xref":"paper","x0":0,"x1":1,"y0":0,"y1":1}],"showlegend":true,"legend":{"bgcolor":null,"bordercolor":null,"borderwidth":0,"font":{"color":"rgba(34,34,34,1)","family":"Helvetica","size":10},"title":{"text":"Product","font":{"color":"rgba(0,0,0,1)","family":"","size":15.940224159402243}}},"hovermode":"x unified","barmode":"relative"},"config":{"doubleClick":"reset","modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"source":"A","attrs":{"337490e2daa":{"x":{},"y":{},"colour":{},"type":"scatter"},"33744c6e7105":{"x":{},"y":{},"colour":{}},"33744c8b3a4c":{"x":{},"y":{},"colour":{}},"33741b7d363e":{"x":{},"y":{},"colour":{}},"337431eb641":{"yintercept":{}}},"cur_data":"337490e2daa","visdat":{"337490e2daa":["function (y) ","x"],"33744c6e7105":["function (y) ","x"],"33744c8b3a4c":["function (y) ","x"],"33741b7d363e":["function (y) ","x"],"337431eb641":["function (y) ","x"]},"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.20000000000000001,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+</section>
+<section id="cheese" class="level3">
+<h3 class="anchored" data-anchor-id="cheese"><em>Cheese!</em></h3>
+<p>When all types of cheese are combined, the average consumption in 1975 was 18.8 lbs per person to 39 lbs per person in 2017. That’s a whole extra 20.2 lbs of cheese being eaten, a near doubling of consumption in forty years. There has been an awakening in the public consciousness over what is and isn’t a healthy food – it can be seen in the decrease of whole milk sales and the increase in yoghurt and lower fat milks. But does cheese have health attributes?</p>
+<p>The answer behind the soaring popularity may lie in the composition of the variety of cheeses purchased.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="C7083_Data_Visualisation_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Natural cheese, made just from milk, enzymes, salt and natural colourings (also known as ‘cheese’ in other parts of the world) has seen a big increase - over three times so. The quantity of cheese that has been processed, with emulsifiers and preservatives added, has barely changed. So, it would appear the healthier option, natural cheese, has won out. Studies suggest perceptions on cheese have altered, with Americans considering its high protein and calcium content<sup>15</sup>.</p>
+<p>But cheese isn’t always eaten solely; it forms a big part of Italian and Tex-Mex cuisine and convenience foods<sup>16</sup>. Meaning it isn’t necessarily good for you; it’s just really tasty!</p>
+<p>From milk to mozzarella, the changing face of American dairy is in part driven by consumer awareness of dietary and health guidelines, combined with the power of choice when given a wider range of products, and undeniably - although not documented here - price will play a huge role in determining decisions<sup>17</sup>. Milk consumption may be decreasing, but with yoghurt and cheese on the rise, dairy, in all its many forms, will continue to be a dietary cornerstone in the United States.</p>
+<section id="references" class="level4">
+<h4 class="anchored" data-anchor-id="references"><em>References</em></h4>
+<ol type="1">
+<li>Frick, F. and Sauer, J. (2018), Deregulation and Productivity: Empirical Evidence on Dairy Production. American Journal of Agricultural Economics, 100: 354-378. https://doi-org.hau.idm.oclc.org/10.1093/ajae/aax074</li>
+<li>Thoma G, Popp J, Nutter D, Shonnard D, Ulrich R, Matlock M, (2013) Greenhouse gas emissions from milk production and consumption in the United States: A cradle-to-grave life cycle assessment circa 2008, International Dairy Journal, Volume 31, Supplement 1, Pages S3-S14, ISSN 0958-6946, Https://doi.org/10.1016/j.idairyj.2012.08.013</li>
+<li>Meyerding S.G.H, Seidemann A, (2024) Influence of packaging, husbandry, feeding practices, and price transparency on consumer segments preferences for milk in Germany: A conjoint and latent class analysis, Future Foods, Volume 10, 100414, ISSN 2666-8335, https://doi.org/10.1016/j.fufo.2024.100414.</li>
+<li>Vanderhout, S. M., Aglipay, M., Torabi, N., Jüni, P., da Costa, B. R., Birken, C. S., O’Connor, D. L., Thorpe, K. E., &amp; Maguire, J. L. (2020). Whole milk compared with reduced-fat milk and childhood overweight: a systematic review and meta-analysis. The American journal of clinical nutrition, 111(2), 266–279. https://doi.org/10.1093/ajcn/nqz276</li>
+<li>W.S. Harwood, M.A.&nbsp;Drake, (2018), Identification and characterization of fluid milk consumer groups, Journal of Dairy Science, Volume 101, Issue 10, Pages 8860-8874, ISSN 0022-0302, https://doi.org/10.3168/jds.2018-14855.</li>
+<li>Bir, C. et al.&nbsp;(2019) Traditional attributes moo-ve over for some consumer segments: Relative ranking of fluid milk attributes. Appetite. [Online] 134162–171.</li>
+<li>Rimkus L, Isgor Z, Ohri-Vachaspati P, Zenk S.N, Powell L.M, Barker C.D (2015) Disparities in the Availability and Price of Low-Fat and Higher-Fat Milk in US Food Stores by Community Characteristics, Journal of the Academy of Nutrition and Dietetics, Volume 115, Issue 12, Pages 1975-1985, ISSN 2212-2672, https://doi.org/10.1016/j.jand.2015.04.002.</li>
+<li>Mozaffarian D. (2019). Dairy Foods, Obesity, and Metabolic Health: The Role of the Food Matrix Compared with Single Nutrients. Advances in nutrition (Bethesda, Md.), 10(5), 917S–923S. https://doi.org/10.1093/advances/nmz053</li>
+<li>Mozaffarian, D., Hao, T., Rimm, E. B., Willett, W. C., &amp; Hu, F. B. (2011). Changes in diet and lifestyle and long-term weight gain in women and men. The New England journal of medicine, 364(25), 2392–2404. https://doi.org/10.1056/NEJMoa1014296</li>
+<li>Wang, H., Troy, L. M., Rogers, G. T., Fox, C. S., McKeown, N. M., Meigs, J. B., &amp; Jacques, P. F. (2014). Longitudinal association between dairy consumption and changes of body weight and waist circumference: the Framingham Heart Study. International journal of obesity (2005), 38(2), 299–305. https://doi.org/10.1038/ijo.2013.78</li>
+<li>Mauro Fisberg, Rachel Machado, History of yogurt and current patterns of consumption, Nutrition Reviews, Volume 73, Issue suppl_1, 1 August 2015, Pages 4–7, https://doi.org/10.1093/nutrit/nuv020</li>
+<li>Hartel, R. W., Rankin, S. A., &amp; Bradley, R. L. (2017). A 100-Year Review: Milestones in the development of frozen desserts. Journal of Dairy Science, 100(12), 10014–10025. https://doi.org/10.3168/jds.2017-13278</li>
+<li>An analysis of at-home demand for ice cream in the United States, Davis, C.G. et al.&nbsp;Journal of Dairy Science, Volume 92, Issue 12, 6210 - 6216</li>
+<li>Sipple, L. R., Racette, C. M., Schiano, A. N., &amp; Drake, M. A. (2022). Consumer perception of ice cream and frozen desserts in the “better-for-you” category. Journal of Dairy Science, 105(1), 154–169. https://doi.org/10.3168/jds.2021-21029</li>
+<li>Biswas A.C, Salunke P, Metzger LE, (2025) Effect of cheese coagulants on American-style natural cheese proteolysis and functional characteristics of process cheese made therefrom, International Dairy Journal, Volume 161, 106135, ISSN 0958-6946, https://doi.org/10.1016/j.idairyj.2024.106135.</li>
+<li>D.A. Hutchins, R. Andrew Hurley, (2024) A systematic review of articles influencing United States retail cheese packaging, labelling, and market trends related to cheese in the marketplace and during consumption*, Journal of Dairy Science, Volume 107, Issue 12,Pages 0244-10255, ISSN 0022-0302, https://doi.org/10.3168/jds.2023-23977.</li>
+<li>Francesco Bimbo, Alessandro Bonanno, Giuseppe Nocella, Rosaria Viscecchia, Gianluca Nardone, Biagia De Devitiis, (2017) Consumers’ acceptance and preferences for nutrition-modified and functional dairy products: A systematic review, Appetite, Volume 113, Pages 141-154, ISSN 0195-6663, https://doi.org/10.1016/j.appet.2017.02.031.</li>
+</ol>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
