@@ -58,7 +58,7 @@ ggplot(comparison, aes(x = year)) +
   geom_line(aes(y = milk_production_billion_lbs, 
                 color = "Milk Production (Billion lbs)"), linewidth = 1) +
   geom_line(aes(y = fluid_milk, 
-                color = "Fluid Milk (Hundreds lbs)"), linewidth = 1) +# two y axes are appropriate
+                color = "Fluid Milk (Hundreds lbs)"), linewidth = 1) +
   geom_hline(yintercept = 100, size = 0.7, colour="#333333") +
   scale_y_continuous(
     name = "Milk Production (Billion lbs)",
@@ -115,7 +115,7 @@ graph_02 <-ggplot(milk_sales_filter, aes(x = year, y = pounds, color = milk_type
        x = "Year",
        y = "Billion (lbs)",
        color = "Milk Types") +
-  bbc_style() +
+  bbc_style() + # very much like this style
   theme_minimal() +
     theme(
     plot.title = element_text(size = 14, face = "bold"),
@@ -175,9 +175,7 @@ graph_04 <-ggplot(frozen, aes(x = year, y = value, fill = variable)) +
   geom_hline(yintercept = 0, size = 0.7, colour = "#333333") +
   scale_x_continuous(breaks = seq(min(frozen$year), max(frozen$year), by = 5)) +
   scale_y_continuous(breaks = seq(0, 20, by = 5), 
-              limits = c(0, 20),
-              sec.axis = sec_axis(~., name = "Lbs per person", 
-              breaks = seq(0, 20, by = 5))) +
+                     limits = c(0, 20)) +
   scale_fill_manual(values = wes_palette("GrandBudapest1"), # Thank you Karthik Ram
       labels = c("Regular Ice Cream", "Low Fat Ice Cream", "Sherbet", "Other")) +
   bbc_style() +
@@ -186,7 +184,7 @@ graph_04 <-ggplot(frozen, aes(x = year, y = value, fill = variable)) +
        y = "Lbs per person",
        fill = "Frozen Categories") +
   theme(
-    legend.position = "right",  # Position legend on the right
+    legend.position = "right",  # trying to be consistent across all graphs
     plot.title = element_text(hjust = 0.5, size = 14, face = "bold"),
     axis.title = element_text(size = 12), 
     legend.title = element_text(size = 12),  
@@ -266,6 +264,7 @@ print(graph_05) # It's a bit rough, but I've run out of time!
 # Saving graph, but have to use plotly's 
 saveWidget(graph_05, "C:\\Users\\sarah\\OneDrive\\Documents\\graph_05.html")
 
+# Graph 05 is a nightmare to render, just can't seem to affect the title size
 
 
 
@@ -342,3 +341,5 @@ finalise_plot(
   height_pixels = 550  
 )
 print(graph_06)
+
+# Sorry my code isn't tidier! I go with whatever works, which means it can look a bit rough!
