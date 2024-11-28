@@ -1,0 +1,459 @@
+---
+title: "From Milk to Mozzarella: The Changing Face of American Dairy"
+author: "S-J Childs"
+format: 
+  html:
+    self-contained: true
+editor: visual
+---
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+## CONTENTS ####
+## 00 Setup
+## 01 Graph 01 Line chart: Milk produced vs Milk consumed
+## 02 Graph 02 Faceted line: Type of Milk Sales
+## 03 Graph 03 Scatter plot in base R, yogurt to milk
+## 04 Graph 04 Area chart of Ice cream Consumption
+## 05 Graph 05 Interactive Line Chart of Milk Products
+## 06 Graph 06 Bar chart comparison of Cheeses
+
+## 00 Setup ####
+
+# Install packages and load libraries
+if(!require(pacman))install.packages("pacman")
+
+pacman::p_load('dplyr', 'tidyr', 'tidyverse',
+               'ggplot2',  'ggalt', 'reshape2', 'plotly',
+               'forcats', 'R.utils', 'png', 'wesanderson', 
+               'grid', 'ggpubr', 'scales', 'htmlwidgets',
+               'devtools', 'readr', 'bbplot') # inspiration from https://bbc.github.io/rcookbook/
+devtools::install_github('bbc/bbplot') # bbplot is not CRAN
+
+
+# Load the data
+# Define the URLs
+url1 <- "https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/master/data/2019/2019-01-29/fluid_milk_sales.csv"
+url2 <- "https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/master/data/2019/2019-01-29/milk_products_facts.csv"
+url3 <- "https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/master/data/2019/2019-01-29/milkcow_facts.csv"
+url4 <- "https://raw.githubusercontent.com/rfordatascience/tidytuesday/refs/heads/master/data/2019/2019-01-29/clean_cheese.csv"
+  
+# Read the data into R
+milk_sales <- read.csv(url1)
+products <- read.csv(url2)
+milkcows <- read.csv(url3)
+cheese <- read.csv(url4)
+```
+
+Americans’ relationship with dairy has seen some significant shifts over the last four decades, but the detail in the data reveals some interesting surprises. The trends in the graph below show that milk production has continued to rise and rise - and yet, counterintuitively, the amount of milk each person drinks has nosedived<sup>1</sup>. So, what’s the story?
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig.width: 8.5
+#| fig.height: 5.5
+## Graph 01: Line chart comparing milk produced and milk consumed ####
+
+# Comparing trends, but the comparison is between billions and hundreds of lbs
+production <- milkcows %>%
+  mutate(milk_production_billion_lbs = round(milk_production_lbs / 1e9)) %>%
+  select(-milk_production_lbs) # rounding the billions, helps view comparison
+
+# Merge on the 'year' column
+comparison <- merge(production, products, by = "year")
+
+# Plotting
+
+ggplot(comparison, aes(x = year)) +
+  geom_line(aes(y = milk_production_billion_lbs, 
+                color = "Milk Production (Billion lbs)"), linewidth = 1) +
+  geom_line(aes(y = fluid_milk, 
+                color = "Fluid Milk (Hundreds lbs)"), linewidth = 1) +# two y axes are appropriate
+  geom_hline(yintercept = 100, size = 0.7, colour="#333333") +
+ scale_y_continuous(
+    name = "Milk Production (Billion lbs)",
+    limits = c(100, 250),
+    sec.axis = sec_axis(~ ., name = "Fluid Milk (Hundreds lbs)")
+  ) + 
+  scale_colour_manual(values = c("sienna2", "lightseagreen")) + # colours via https://sape.inf.usi.ch/quick-reference/ggplot2/colour
+  bbc_style() +
+  labs(
+    x = "Year",
+    y = "Milk Production (Billion lbs)",
+    color = "Legend",
+    title = "Comparison of Milk Produced vs Milk Consumed"
+  ) +
+  theme(
+    legend.position = "right",
+    plot.title = element_text(size = 13, face = "bold"),
+    axis.title = element_text(size = 12),
+    legend.title = element_text(size = 12),
+    legend.text = element_text(size = 12),
+    axis.text = element_text(size = 12)
+  ) 
+```
+
+#### *Milk*
+
+Let’s begin with production.
+
+Dairy production established itself in the east of the U.S. in the Great Lakes region, but soon spread westward following the population shifts. California is in fact the number one milk producing state, and together with Wisconsin, Idaho, Texas and New York state, produces more than half of all American milk<sup>2</sup>.
+
+But this doesn’t necessarily mean that the Golden State is overrun by the bovine hordes. Due to technological advancements, improvements in feed quality, and animal breeding programmes over the last forty years, the amount of milk produced per cow has skyrocketed - twice the amount today than in 1980<sup>1</sup>. Such efficiencies have led to a reduction in the total U.S. herd size by 30%<sup>2</sup>.
+
+More is made with less. But where is that ‘more’ going?
+
+From 234 lbs of milk a year in 1980 to 159lbs in 2014, is roughly a drop of about a third. Each successive generation is drinking less and, curiously, this trend has also been reported in other countries, including developing nations<sup>3</sup>.
+
+Milk isn’t just milk, however. There are a range of types namely, whole fat (4%), reduced fat (2%), low-fat (1%), skimmed and flavoured varieties. Not all of these have witnessed a decline - whole fat and flavoured whole fat have decreased, but, as we can see below, lower fat content milks have become more popular. This isn’t enough to halt the overall combined trend but could indicate an increasing awareness among the public of health-related issues to do with dietary fat intake<sup>4</sup>.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig.width: 10
+#| fig.height: 6
+## Graph 02: Types of Milk Sold ####
+
+# I'm going to filter milk_sales data as 'total production' isn't needed
+# Also taking out eggnog and buttermilk as they're so niche, I want to focus on milk
+
+sales <- milk_sales %>%
+  mutate(pounds = round(pounds / 1e8)) # rounding the billions, helps view comparison
+
+milk_sales_filter <- sales %>%
+  filter(!milk_type %in% c("Buttermilk", "Eggnog", "Total Production"))
+
+# Plotting
+
+ggplot(milk_sales_filter, aes(x = year, y = pounds, color = milk_type)) +
+  geom_line(linewidth = 1.1) +
+  geom_hline(yintercept = 0, linewidth = 0.5, colour="#333333") +
+  facet_wrap(~ milk_type, scales = "free_y") +
+  labs(title = "Type of Milk Produced in the USA",
+       x = "Year",
+       y = "Billion lbs",
+       color = "Milk Types") +
+  bbc_style() +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(size = 16, face = "bold"),
+    axis.title = element_text(size = 12),
+    legend.title = element_text(size = 12),
+    legend.text = element_text(size = 12),
+    axis.text = element_text(size = 12)
+  ) 
+
+```
+
+Harwood and Drake’s study in 2018 of U.S. households, confirmed that reduced fat and low-fat milk were more frequently drunk, with preferences turning against whole <sup>5</sup>. Purchasing patterns in this study and additional studies <sup>6</sup> also shed light on milk type consumed by differing income groups, with those in higher income brackets (100,000 dollars and higher) more likely to go for skimmed and low-fat milk than lower income brackets (0-24,999 dollars).
+
+But a cautious approach is needed here, if we’re tempted to make generalisations about income and preference – the availability of all milk types is not equally distributed across the U.S.<sup>5</sup>. An insightful 2015 study by Rimkus et al at convenience and grocery stores in differing demographic areas nationwide, found that fewer than half stocked low-fat and skimmed milk. And in a low-income neighbourhood the likelihood of carrying reduced fat milks were significantly lower than compared to high-income communities<sup>7</sup>. Purchasing decisions are as much about availability as they are preferences and awareness of a healthy diet.
+
+#### *Yoghurt*
+
+So, if milk isn’t being drunk, then where is it going to? The answer may be the other milk derived products out there, such as yoghurt. When examining the relationship between quantities of milk versus quantities of yoghurt consumed, intriguing speculations can be made.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+# Set the axis text size
+par(cex.axis = 1) 
+
+plot(products$fluid_milk, products$fluid_yogurt,
+     xlab = "Milk (lbs)",
+     ylab = "Yogurt (lbs)",
+     main = "",
+     pch = 19, col = "lightseagreen",
+     cex = 1.2)
+
+# Add the main title with adjusted position
+title(main = "Yogurt to Milk Relationship", line = 2, adj = 0)
+
+```
+
+The graph suggests a negative correlation between the two. Yoghurt has surged in popularity in America, as milk itself has decreased<sup>8</sup>, in part due to its cultural prominence as a food associated with good health. It’s higher nutritional value, (riboflavin, vitamins B-6 and B-12, calcium, potassium, zinc) than milk comes from the fermentation process by which it is made. It has been a component of global cuisines over millennia - the word ‘yoghurt’ coming from the Turkish word *“yoğurmak”* meaning to curdle or thicken - but not until recently is it now recognised as a marker of a healthy diet and lifestyle in various regions around the world <sup>9</sup>.
+
+Consequently, yoghurt-eaters are shown to have reduced incidences of obesity, hypertension and diabetes, plus greater nutrient intake from overall healthier dietary habits<sup>10</sup>. Even healthier non-nutritional behaviours are demonstrated, such as lower rates of smoking and higher participation in physical activity<sup>11</sup>. Americans may not eat as much yoghurt as the French (five servings a week!) for example <sup>10</sup>, but this increasing trend could be hugely beneficial. Except… well, there’s caveat: not all yoghurts are healthy. Mozaffarian et al (2019) noted the wide product range of yoghurts in U.S. stores and the quantity of artificially sweetened, flavoured and enhanced (with fruit compote or crunchy inclusions, for example), which were inversely associated with any health improvements<sup>8</sup>.
+
+#### *Ice Cream*
+
+Another major dairy output is ice cream.
+
+Courtesy of Nancy Johnson’s 1843 patent for a hand-cranked ice cream freezer, commercial ice cream manufacturing grew in America from the late 19th century onwards<sup>12</sup>. The 1920s Prohibition Era helped establish it as a commonplace foodstuff, with beer makers, such as Anheuser-Busch, switching over their breweries to ice cream production to keep the business afloat<sup>12</sup>. Anheuser-Busch’s campaign encouraged people to “eat a plate of ice cream everyday”, no less!
+
+It became culturally embedded through the soda shops and drugstore counters of the 1930s and had moral boosting effects during WW2, with pop-up factories on the frontlines and \$1 million spent on a floating ice cream barge that patrolled the pacific, making up to 500 gallons a day<sup>13</sup>. The 1950s and 60s saw widespread establishment of the frozen aisle, stocked with what was now considered a staple. In 1946, the average American ate 22.7 lbs of ice cream a year<sup>14</sup>. As we can see below, by 1975 this had already dropped to 18lbs and by 2017, 12.7lbs.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig.width: 8.5
+#| fig.height: 5
+## Graph 04: Area chart depicting Ice Cream consumption ####
+
+frozen <- melt(products, id.vars = "year",
+          measure.vars = c("frozen_ice_cream_regular", "frozen_ice_cream_reduced_fat", 
+                           "frozen_sherbet", "frozen_other"))
+frozen$variable <- factor(frozen$variable, 
+          levels = c("frozen_ice_cream_regular", "frozen_ice_cream_reduced_fat", 
+                     "frozen_sherbet", "frozen_other"))
+
+# Plotting
+
+ggplot(frozen, aes(x = year, y = value, fill = variable)) +
+  geom_area(alpha = 0.6, linewidth = 0.5, colour = "grey", position = "identity") +
+  geom_hline(yintercept = 0, size = 0.7, colour = "#333333") +
+  scale_x_continuous(breaks = seq(min(frozen$year), max(frozen$year), by = 5)) +
+  scale_y_continuous(breaks = seq(0, 20, by = 5), 
+                     limits = c(0, 20)) +
+  scale_fill_manual(values = wes_palette("GrandBudapest1"), # Thank you Karthik Ram
+      labels = c("Regular Ice Cream", "Low Fat Ice Cream", "Sherbet", "Other")) +
+  bbc_style() +
+  labs(title = "Frozen Dairy Products Consumed Per Person",
+       x = "Year",
+       y = "Lbs per person",
+       fill = "Frozen Categories") +
+  theme(
+    legend.position = "right",  # Position legend on the right
+    plot.title = element_text(hjust = 0, size = 14, face = "bold"),
+    axis.title = element_text(size = 12), 
+    legend.title = element_text(size = 12),  
+    legend.text = element_text(size = 12),
+    axis.text = element_text(size = 12)
+  )
+
+```
+
+Low fat options and sherbet (like sorbet, but made with dairy) have stayed relatively stable at about 6lbs and 1lbs respectively, suggesting the observed decline of regular ice cream may not be due to dietary trends away from fat and sugar. Studies reveal that, with freezers becoming a common household appliance, customers are now offered a much broader variety to choose from and eat at home<sup>13</sup>. Ice cream is no longer the major dessert option. How about a cheesecake, profiteroles, gateaux or apple pie?
+
+There could also be changes in taste preferences over the generations, with survey results indicating you’re far more likely to purchase higher amounts of ice cream if you’re over 55 years old<sup>14</sup>. The younger masses do still eat ice cream, but it is often smaller sized, premium or artisan varieties – with some interesting new flavours available, such as goat’s cheese, sweet potato pie, or even carrot and habanero pepper (*really tho?!*)<sup>13</sup>.
+
+As an aside, yes, the spike in the 'Other' frozen dairy category is curious. Although not stated in the data, it does suspiciously mirror the rise of the uber-fad that was frozen yoghurt, which swept across the U.S. in the late 1980s to mid-1990s<sup>12</sup>. Everybody was eating frozen yoghurt. And then got a little bit bored of it.
+
+Looking at the trends of the major non-milk dairy products from 1975 to 2017, the winners and losers start to show. Butter has remained steadfastly stable with limited variation over time, hovering at around 5lbs per person. Ice cream is on a slower slide down and yoghurt rises in popularity noticeably from the turn of the millennium onward.
+
+There’s one phenomenon occurring here that stands out from the rest, however…
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+
+## Graph 05: Interactive Line Chart of Milk Products ####
+
+products$frozen_combined <- products$frozen_ice_cream_regular + 
+  products$frozen_ice_cream_reduced_fat + 
+  products$frozen_sherbet +
+  products$frozen_other
+
+products$cheese_combined <- products$cheese_american +
+  products$cheese_other + 
+  products$cheese_cottage
+
+
+# Plotting
+# Once ggplot is made, I then assign it so I can use ggplotly function
+p <- ggplot(products, aes(x = year)) +
+  geom_line(aes(y = fluid_yogurt, color = "Fluid Yogurt"), linewidth = 1.1) +
+  geom_line(aes(y = frozen_combined, color = "Ice Cream"), linewidth = 1.1) +
+  geom_line(aes(y = cheese_combined, color = "Cheese"), linewidth = 1.1) +
+  geom_line(aes(y = butter, colour = "Butter"), linewidth = 1.1) +
+  geom_hline(yintercept = 0, size = 0.7, colour="#333333") +
+  scale_color_manual(values = c("Fluid Yogurt" = "orange", "Butter" = "steelblue3",
+                                "Ice Cream" = "lightseagreen", "Cheese" = "sienna2")) +
+  scale_x_continuous(breaks = seq(min(products$year), max(products$year), by = 5)) +
+  scale_y_continuous(breaks = seq(0, 40, by = 5), limits = c(0, 40)) +
+  bbc_style() +
+  labs(title = "Changes to Consumed Dairy Products Over Time",
+       x = "Year",
+       y = "Lbs per person",
+       color = "Product") +
+  theme(
+    legend.position = "right",
+    plot.title = element_text(size = 14, face = "bold"),
+    axis.title = element_text(size = 12),
+    legend.title = element_text(size = 12),
+    legend.text = element_text(size = 14),
+    axis.text = element_text(size = 12)
+  ) 
+
+# Then make it interactive
+
+graph_05 <- ggplotly(p, tooltip = c("x", "y", "color")) %>%
+  layout(
+    title = list(text = "Changes to Consumed Dairy Products Over Time", 
+                 font = list (size = 14, face = "bold")),
+    xaxis = list(title = "Year", tickmode = "linear", 
+                 tick0 = min(products$year), dtick = 5),
+    yaxis = list(title = "Lbs per person", tickmode = "linear", tick0 = 0, 
+                 dtick = 5, range = c(0, 40)),
+    legend = list(title = list(text = "Product"), font = list(size = 12)),
+    hovermode = "x unified"
+  )
+htmltools::tagList(graph_05)
+
+```
+
+#### *Cheese*
+
+When all types of cheese are combined, the average consumption in 1975 was 18.8 lbs per person to 39 lbs per person in 2017. That’s a whole extra 20.2 lbs of cheese being eaten, a near doubling of consumption in forty years. There has been an awakening in the public consciousness over what is and isn’t a healthy food – it can be seen in the decrease of whole milk sales and the increase in yoghurt and lower fat milks. But does cheese have health attributes?
+
+The answer behind the soaring popularity may lie in the composition of the variety of cheeses purchased.
+
+```{r}
+#| echo: false
+#| warning: false
+#| results: hide
+
+## Graph 06: Bar chart comparison of Cheeses ####
+
+cheese <- cheese %>%
+  rename("Total.American.Cheese" = "Total.American.Chese")
+
+# Create a new column for decades
+cheese$Decade <- floor(cheese$Year / 10) * 10
+
+# Filter the data to include only the 1970s and 2010s
+cheese_decades <- cheese %>%
+  filter(Decade == 1970 | Decade == 2010)
+
+# Group by Decade and calculate the mean for each column
+cheese_compare <- cheese_decades %>%
+  group_by(Decade) %>%
+  summarise(
+    Total_American = mean(`Total.American.Cheese`, na.rm = TRUE),
+    Total_Italian = mean(`Total.Italian.Cheese`, na.rm = TRUE),
+    Total_Processed = mean(`Total.Processed.Cheese.Products`, na.rm = TRUE),
+    Total_Natural = mean(`Total.Natural.Cheese`, na.rm = TRUE)
+  )
+
+# Reshape the data for plotting
+chevy_cheese <- cheese_compare %>%
+  pivot_longer(
+    cols = starts_with("Total"), 
+    names_to = "Cheese_Type",
+    values_to = "Amount",
+    names_prefix = "Total_"
+  )
+# Define the order of cheese types
+cheese_order <- c("Natural", "Italian", "American", "Processed")
+
+# Convert Cheese_Type to a factor with the specified order
+chevy_cheese$Cheese_Type <- factor(chevy_cheese$Cheese_Type, levels = cheese_order)
+
+# Plotting
+
+ggplot(chevy_cheese, aes(x = Cheese_Type, 
+           y = Amount, 
+           fill = as.factor(Decade))) +
+  geom_bar(stat="identity", position="dodge") +
+  geom_hline(yintercept = 0, size = 0.7, colour="#333333") +
+   scale_y_continuous(breaks = seq(0, 35, by = 5), 
+                     limits = c(0, 35)) +
+  bbc_style() +
+  scale_fill_manual(values = c("sienna2", "lightseagreen")) +
+  labs(title = "Cheese Consumed: 1970s vs 2010s",
+       x = "Cheese Type",
+       y = "Lbs per person",
+       fill = "Decade") +
+  theme(
+    legend.position = "right",
+    plot.title = element_text(hjust = 0, size = 14, face = "bold"), 
+    axis.title = element_text(size = 12),  
+    legend.title = element_text(size = 12),
+    legend.text = element_text(size = 10),
+    axis.text = element_text(size = 12)
+  )
+```
+
+Natural cheese, made just from milk, enzymes, salt and natural colourings (also known as ‘cheese’ in other parts of the world) has seen a big increase - over three times so. The quantity of cheese that has been processed, with emulsifiers and preservatives added, has barely changed. So, it would appear the healthier option, natural cheese, has won out. Studies suggest perceptions on cheese have altered, with Americans considering its high protein and calcium content<sup>15</sup>.
+
+But cheese isn’t always eaten solely; it forms a big part of Italian and Tex-Mex cuisine and convenience foods<sup>16</sup>. Meaning it isn’t necessarily good for you; it’s just really tasty!
+
+From milk to mozzarella, the changing face of American dairy is in part driven by consumer awareness of dietary and health guidelines, combined with the power of choice when given a wider range of products, and undeniably - although not documented here - price will play a huge role in determining decisions<sup>17</sup>. Milk consumption may be decreasing, but with yoghurt and cheese on the rise, dairy, in all its many forms, will continue to be a dietary cornerstone in the United States.
+
+*All data to make th graphics has been sourced from Github's Tidy Tuesday pages. See https://github.com/rfordatascience/tidytuesday/blob/master/data/2019/2019-01-29 for the raw*
+
+### *Postscript: What makes a good or bad graphic?*
+
+#### Example of a Good Graph
+
+This graph is from the study "Oyster reefs as natural breakwaters mitigate shoreline loss and facilitate fisheries (2011)".
+
+Graph and figures are powerful tools of communication. They are an important part of storytelling, and even if they are figures in an immensely serious scientific journal, they exist to convey the narrative. If they’re really well done, graphs and figures can take a large amount of complex information and visually translate it into an effortless display that sustains your interest.
+
+Maybe you think the graph shown here looks basic? However, it does some simple but important things.
+
+![Oyster reefs as natural breakwaters mitigate shoreline loss and facilitate fisheries 2011](C:\Users\sarah\Documents\Example_Reefs.png)
+
+Title: The audience may ask, “what’s the point of this?” and giving a clear and informative title is the first step to answering this. The title tells you straight what it shows and where, no ambiguity.
+
+Clutter: Yes, it’s simple, but that’s perfect for getting the information across. There’s no clutter. It’s very easy to over-do graphics, adding pretty but pointless colours, interesting fonts or 3-D shadows. This graph has a simple composition.
+
+Axes: Double y-axes do not always work and can be confusing, but here both are clearly labelled. The right-hand y-axis is set back a bit to avoid uncertainty.
+
+Key: The key is simple and effective with no frills. This symbol means this, that symbol means that. The symbols used are easily identifiable and do not look similar.
+
+Acknowledgements: sources are acknowledged in a note at the bottom. Very good and polite practice.
+
+So let's look at a different example now.
+
+![Unbiased mapping of transcription factor binding sites along human chromosomes 21 and 22 points to widespread regulation of noncoding RNAs 2004](C:\Users\sarah\Documents\cawley_fig1.jpg)
+
+Pie chart: Everyone likes pie... well, no. Humans are just terrible are gaging the size of an area, especially when it is 3-D. If the percentages were not written there next to it, could you really tell that the “Novel” section was bigger than the “5’ known to gene”? If you are having to state the numbers on the graphic, it is time to stop, pause and rethink – maybe a simple 2-D bar chart would have sufficed?
+
+The colours are, technically, yuck. And suspiciously extremely similar to what you would find in Excel. There is also *a lot* of explanatory text under the tiny tiny figure title, which sheds very little light as to what is going on.
+
+Ultimately, when communicating scientific research - especially if it is to go beyond the realms of just the scientific community to the wider world – it is imperative for professionals to have a firm grasp of data visualisation as much as with experimental design or being sensational at statistics. With some disciplines becoming ever more public facing <sup>a</sup>, the audience could be people you need to convince about man-made climate change. Or they could be your future funders.
+
+Maybe the two poles of the arts and the sciences ought to get a little closer?
+
+#### *Graph References*
+
+*Good graph*: Scyphers, S. B., Powers, S. P., Heck, K. L., Jr, & Byron, D. (2011). Oyster reefs as natural breakwaters mitigate shoreline loss and facilitate fisheries. PloS one, 6(8), e22396. https://doi.org/10.1371/journal.pone.0022396
+
+*Bad graph*: Cawley, S., Bekiranov, S., Ng, H. H., Kapranov, P., Sekinger, E. A., Kampa, D., Piccolboni, A., Sementchenko, V., Cheng, J., Williams, A. J., Wheeler, R., Wong, B., Drenkow, J., Yamanaka, M., Patel, S., Brubaker, S., Tammana, H., Helt, G., Struhl, K., & Gingeras, T. R. (2004). Unbiased mapping of transcription factor binding sites along human chromosomes 21 and 22 points to widespread regulation of noncoding RNAs. Cell, 116(4), 499–509. https://doi.org/10.1016/s0092-8674(04)00127-8
+
+a)  Perra, M., and T. Brinkman. 2021. Seeing science: using graphics to communicate research. Ecosphere 12(10):e03786. 10.1002/ecs2.3786
+
+#### *Essay References*
+
+1)  Frick, F. and Sauer, J. (2018), Deregulation and Productivity: Empirical Evidence on Dairy Production. American Journal of Agricultural Economics, 100: 354-378. https://doi-org.hau.idm.oclc.org/10.1093/ajae/aax074
+2)  Thoma G, Popp J, Nutter D, Shonnard D, Ulrich R, Matlock M, (2013) Greenhouse gas emissions from milk production and consumption in the United States: A cradle-to-grave life cycle assessment circa 2008, International Dairy Journal, Volume 31, Supplement 1, Pages S3-S14, ISSN 0958-6946, Https://doi.org/10.1016/j.idairyj.2012.08.013
+3)  Meyerding S.G.H, Seidemann A, (2024) Influence of packaging, husbandry, feeding practices, and price transparency on consumer segments preferences for milk in Germany: A conjoint and latent class analysis, Future Foods, Volume 10, 100414, ISSN 2666-8335, https://doi.org/10.1016/j.fufo.2024.100414.
+4)  Vanderhout, S. M., Aglipay, M., Torabi, N., Jüni, P., da Costa, B. R., Birken, C. S., O'Connor, D. L., Thorpe, K. E., & Maguire, J. L. (2020). Whole milk compared with reduced-fat milk and childhood overweight: a systematic review and meta-analysis. The American journal of clinical nutrition, 111(2), 266–279. https://doi.org/10.1093/ajcn/nqz276
+5)  W.S. Harwood, M.A. Drake, (2018), Identification and characterization of fluid milk consumer groups, Journal of Dairy Science, Volume 101, Issue 10, Pages 8860-8874, ISSN 0022-0302, https://doi.org/10.3168/jds.2018-14855.
+6)  Bir, C. et al. (2019) Traditional attributes moo-ve over for some consumer segments: Relative ranking of fluid milk attributes. Appetite. \[Online\] 134162–171.
+7)  Rimkus L, Isgor Z, Ohri-Vachaspati P, Zenk S.N, Powell L.M, Barker C.D (2015) Disparities in the Availability and Price of Low-Fat and Higher-Fat Milk in US Food Stores by Community Characteristics, Journal of the Academy of Nutrition and Dietetics, Volume 115, Issue 12, Pages 1975-1985, ISSN 2212-2672, https://doi.org/10.1016/j.jand.2015.04.002.
+8)  Mozaffarian D. (2019). Dairy Foods, Obesity, and Metabolic Health: The Role of the Food Matrix Compared with Single Nutrients. Advances in nutrition (Bethesda, Md.), 10(5), 917S–923S. https://doi.org/10.1093/advances/nmz053
+9)  Mozaffarian, D., Hao, T., Rimm, E. B., Willett, W. C., & Hu, F. B. (2011). Changes in diet and lifestyle and long-term weight gain in women and men. The New England journal of medicine, 364(25), 2392–2404. https://doi.org/10.1056/NEJMoa1014296
+10) Wang, H., Troy, L. M., Rogers, G. T., Fox, C. S., McKeown, N. M., Meigs, J. B., & Jacques, P. F. (2014). Longitudinal association between dairy consumption and changes of body weight and waist circumference: the Framingham Heart Study. International journal of obesity (2005), 38(2), 299–305. https://doi.org/10.1038/ijo.2013.78
+11) Mauro Fisberg, Rachel Machado, History of yogurt and current patterns of consumption, Nutrition Reviews, Volume 73, Issue suppl_1, 1 August 2015, Pages 4–7, https://doi.org/10.1093/nutrit/nuv020
+12) Hartel, R. W., Rankin, S. A., & Bradley, R. L. (2017). A 100-Year Review: Milestones in the development of frozen desserts. Journal of Dairy Science, 100(12), 10014–10025. https://doi.org/10.3168/jds.2017-13278
+13) An analysis of at-home demand for ice cream in the United States, Davis, C.G. et al. Journal of Dairy Science, Volume 92, Issue 12, 6210 - 6216
+14) Sipple, L. R., Racette, C. M., Schiano, A. N., & Drake, M. A. (2022). Consumer perception of ice cream and frozen desserts in the “better-for-you” category. Journal of Dairy Science, 105(1), 154–169. https://doi.org/10.3168/jds.2021-21029
+15) Biswas A.C, Salunke P, Metzger LE, (2025) Effect of cheese coagulants on American-style natural cheese proteolysis and functional characteristics of process cheese made therefrom, International Dairy Journal, Volume 161, 106135, ISSN 0958-6946, https://doi.org/10.1016/j.idairyj.2024.106135.
+16) D.A. Hutchins, R. Andrew Hurley, (2024) A systematic review of articles influencing United States retail cheese packaging, labelling, and market trends related to cheese in the marketplace and during consumption\*, Journal of Dairy Science, Volume 107, Issue 12,Pages 0244-10255, ISSN 0022-0302, https://doi.org/10.3168/jds.2023-23977.
+17) Francesco Bimbo, Alessandro Bonanno, Giuseppe Nocella, Rosaria Viscecchia, Gianluca Nardone, Biagia De Devitiis, (2017) Consumers’ acceptance and preferences for nutrition-modified and functional dairy products: A systematic review, Appetite, Volume 113, Pages 141-154, ISSN 0195-6663, https://doi.org/10.1016/j.appet.2017.02.031.
+
+#### *References that helped with coding and visualisation*
+
+Hammerbacher J. Beautiful data / edited by Toby Segaran and Jeff Hammerbacher. Beijing ; Sebastopol, California : O’Reilly,; 2009.
+
+Healy K. Data Visualization: A Practical Introduction \[Internet\]. Available from: https://socviz.co/
+
+Wickham H. ggplot2 : elegant graphics for data analysis by Hadley Wickham. 2nd edition. Cham : Springer International Publishingr,; 2016.
+
+Wickham H. ggplot2. Wiley Interdisciplinary Reviews: Computational Statistics \[Internet\]. 2011 Mar 1;3(2):180–5. Available from: https://wires.onlinelibrary.wiley.com/doi/10.1002/wics.147
+
+Wilke CO. Fundamentals of Data Visualization \[Internet\]. Available from: https://clauswilke.com/dataviz/
+
+Wes Anderson themed Graphics https://rforpoliticalscience.com/2020/07/26/make-wes-anderson-themed-graphs-with-wesanderson-package-in-r/
